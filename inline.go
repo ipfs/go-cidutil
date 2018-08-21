@@ -5,20 +5,20 @@ import (
 	mhash "github.com/multiformats/go-multihash"
 )
 
-// Inliner is a cid.Builder that will use the id multihash when the
+// InlineBuilder is a cid.Builder that will use the id multihash when the
 // size of the content is no more than limit
-type Inliner struct {
-	cid.Builder
-	Limit int
+type InlineBuilder struct {
+	cid.Builder     // Parent Builder
+	Limit       int // Limit (inclusive)
 }
 
 // WithCodec implements the cid.Builder interface
-func (p Inliner) WithCodec(c uint64) cid.Builder {
-	return Inliner{p.Builder.WithCodec(c), p.Limit}
+func (p InlineBuilder) WithCodec(c uint64) cid.Builder {
+	return InlineBuilder{p.Builder.WithCodec(c), p.Limit}
 }
 
 // Sum implements the cid.Builder interface
-func (p Inliner) Sum(data []byte) (*cid.Cid, error) {
+func (p InlineBuilder) Sum(data []byte) (*cid.Cid, error) {
 	if len(data) > p.Limit {
 		return p.Builder.Sum(data)
 	}

@@ -74,9 +74,10 @@ func Format(fmtStr string, base mb.Encoding, cid *c.Cid) (string, error) {
 		case 'L': // hash length
 			fmt.Fprintf(&out, "%d", p.MhLength)
 		case 'm', 'M': // multihash encoded in base %b
-			out.WriteString(encode(encoder, cid.Hash(), fmtStr[i] == 'M'))
+			out.WriteString(encode(encoder, cid.Hash().Bytes(), fmtStr[i] == 'M'))
 		case 'd', 'D': // hash digest encoded in base %b
-			dec, err := mh.Decode(cid.Hash())
+			// FIXME(steb): should have a direct decode method.
+			dec, err := mh.Decode(cid.Hash().Bytes())
 			if err != nil {
 				return "", err
 			}

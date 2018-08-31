@@ -21,7 +21,7 @@ func main() {
 	if len(os.Args) < 2 {
 		usage()
 	}
-	newBase := mb.Encoding(-1)
+	newBase := ""
 	var verConv func(cid *c.Cid) (*c.Cid, error)
 	args := os.Args[1:]
 outer:
@@ -31,12 +31,7 @@ outer:
 			if len(args) < 2 {
 				usage()
 			}
-			encoder, err := mb.EncoderByName(args[1])
-			if err != nil {
-				fmt.Fprintf(os.Stderr, "Error: %s\n", err.Error())
-				os.Exit(2)
-			}
-			newBase = encoder.Encoding()
+			newBase = args[1]
 			args = args[2:]
 		case "-v":
 			if len(args) < 2 {
@@ -77,9 +72,16 @@ outer:
 			// Don't abort on a bad cid
 			continue
 		}
-		base := newBase
-		if newBase == -1 {
-			base, _ = c.ExtractEncoding(cidStr)
+		var encoder mb.Encoder
+		if newBase == "" {
+			base, _ := c.ExtractEncoding(cidStr)
+			encoder = mb.NewEncoder(base)
+		} else {
+			encoder, err = mb.EncoderByName(args[1])
+			if err != nil {
+				fmt.Fprintf(os.Stderr, "Error: %s\n", err.Error())
+				os.Exit(2)
+			}
 		}
 		if verConv != nil {
 			cid, err = verConv(cid)
@@ -90,7 +92,7 @@ outer:
 				continue
 			}
 		}
-		str, err := cidutil.Format(fmtStr, base, cid)
+		str, err := cidutil.Format(fmtStr, encoder, cid)
 		switch err.(type) {
 		case cidutil.FormatStringError:
 			fmt.Fprintf(os.Stderr, "Error: %v\n", err)

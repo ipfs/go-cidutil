@@ -35,14 +35,10 @@ used.  For Cid version 1 the multibase prefix is included.
 
 // Format formats a cid according to the format specificer as
 // documented in the FormatRef constant
-func Format(fmtStr string, base mb.Encoding, cid *c.Cid) (string, error) {
+func Format(fmtStr string, encoder mb.Encoder, cid *c.Cid) (string, error) {
 	p := cid.Prefix()
 	var out bytes.Buffer
 	var err error
-	encoder, err := mb.NewEncoder(base)
-	if err != nil {
-		return "", err
-	}
 	for i := 0; i < len(fmtStr); i++ {
 		if fmtStr[i] != '%' {
 			out.WriteByte(fmtStr[i])
@@ -56,9 +52,9 @@ func Format(fmtStr string, base mb.Encoding, cid *c.Cid) (string, error) {
 		case '%':
 			out.WriteByte('%')
 		case 'b': // base name
-			out.WriteString(baseToString(base))
+			out.WriteString(baseToString(encoder))
 		case 'B': // base code
-			out.WriteByte(byte(base))
+			out.WriteByte(byte(encoder.Encoding()))
 		case 'v': // version string
 			fmt.Fprintf(&out, "cidv%d", p.Version)
 		case 'V': // version num
@@ -82,11 +78,7 @@ func Format(fmtStr string, base mb.Encoding, cid *c.Cid) (string, error) {
 			}
 			out.WriteString(encode(encoder, dec.Digest, fmtStr[i] == 'D'))
 		case 's': // cid string encoded in base %b
-			str, err := cid.StringOfBase(base)
-			if err != nil {
-				return "", err
-			}
-			out.WriteString(str)
+			out.WriteString(cid.Encode(encoder))
 		case 'S': // cid string without base prefix
 			out.WriteString(encode(encoder, cid.Bytes(), true))
 		case 'P': // prefix
@@ -119,12 +111,10 @@ func (e FormatStringError) Error() string {
 	}
 }
 
-func baseToString(base mb.Encoding) string {
-	baseStr, ok := mb.EncodingToStr[base]
-	if !ok {
-		return fmt.Sprintf("base?%c", base)
-	}
-	return baseStr
+func baseToString(base mb.Encoder) string {
+	// a multibase Encoder is guaranteed to be valid and have an entry
+	// in EncodingToStr
+	return mb.EncodingToStr[base.Encoding()]
 }
 
 func codecToString(num uint64) string {

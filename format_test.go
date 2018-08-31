@@ -55,16 +55,15 @@ func TestFmt(t *testing.T) {
 	}
 }
 
-func testFmt(t *testing.T, cidStr string, newBase mb.Encoding, fmtStr string, result string) {
+func testFmt(t *testing.T, cidStr string, base mb.Encoding, fmtStr string, result string) {
 	cid, err := c.Decode(cidStr)
 	if err != nil {
 		t.Fatal(err)
 	}
-	base := newBase
-	if newBase == -1 {
+	if base == -1 {
 		base, _ = c.ExtractEncoding(cidStr)
 	}
-	str, err := Format(fmtStr, base, cid)
+	str, err := Format(fmtStr, mb.NewEncoder(base), cid)
 	if err != nil {
 		t.Fatal(err)
 	}

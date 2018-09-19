@@ -1,6 +1,8 @@
 package cidenc
 
 import (
+	cidutil "github.com/ipfs/go-cidutil"
+
 	cid "github.com/ipfs/go-cid"
 	path "github.com/ipfs/go-path"
 	mbase "github.com/multiformats/go-multibase"
@@ -19,7 +21,7 @@ type Interface interface {
 	Recode(v string) (string, error)
 }
 
-// Default is the
+// Default is the default encoder
 var Default = Encoder{
 	Base:    mbase.MustNewEncoder(mbase.Base58BTC),
 	Upgrade: false,
@@ -88,4 +90,62 @@ func extractCidString(p string) string {
 		v = segs[1]
 	}
 	return v
+}
+
+// WithOverride is like Encoder but also contains a override map to
+// preserve the original encoding of select CIDs
+type WithOverride struct {
+	base     Encoder
+	override map[cid.Cid]string
+}
+
+func (enc WithOverride) Encoder() Encoder {
+	return enc.base
+}
+
+func (enc WithOverride) Map() map[cid.Cid]string {
+	return enc.override
+}
+
+func NewOverride(enc Encoder) WithOverride {
+	return WithOverride{base: enc, override: map[cid.Cid]string{}}
+}
+
+// Add adds a Cid to the override map if it will be encoded
+// differently than the base encoder
+func (enc WithOverride) Add(cids ...string) {
+	for _, p := range cids {
+		v := p
+		c, err := cid.Decode(v)
+		if err != nil {
+			continue
+		}
+		if enc.base.Encode(c) != v {
+			enc.override[c] = v
+		}
+		c2 := cidutil.TryOtherCidVersion(c)
+		if c2.Defined() && enc.base.Encode(c2) != v {
+			enc.override[c2] = v
+		}
+	}
+}
+
+func (enc WithOverride) Encode(c cid.Cid) string {
+	v, ok := enc.override[c]
+	if ok {
+		return v
+	}
+	return enc.base.Encode(c)
+}
+
+func (enc WithOverride) Recode(v string) (string, error) {
+	if len(enc.override) == 0 {
+		return enc.base.Recode(v)
+	}
+	c, err := cid.Decode(v)
+	if err != nil {
+		return v, err
+	}
+
+	return enc.Encode(c), nil
 }

@@ -1,6 +1,8 @@
 package cidenc
 
 import (
+	"context"
+
 	cidutil "github.com/ipfs/go-cidutil"
 
 	cid "github.com/ipfs/go-cid"
@@ -148,4 +150,22 @@ func (enc WithOverride) Recode(v string) (string, error) {
 	}
 
 	return enc.Encode(c), nil
+}
+
+type encoderKey struct{}
+
+// Enable "enables" the encoder in the context using WithValue
+func Enable(ctx context.Context, enc Interface) context.Context {
+	return context.WithValue(ctx, encoderKey{}, enc)
+}
+
+// Get gets an encoder from the context if it exists, otherwise the
+// default context is called.
+func Get(ctx context.Context) Interface {
+	enc, ok := ctx.Value(encoderKey{}).(Interface)
+	if !ok {
+		// FIXME: Warning?
+		enc = Default
+	}
+	return enc
 }

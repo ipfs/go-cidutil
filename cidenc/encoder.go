@@ -10,8 +10,8 @@ import (
 	mbase "github.com/multiformats/go-multibase"
 )
 
-// Encoder is a basic Encoder that will encode Cid's using
-// a specifed base, optionally upgrading a Cid if is Version 0
+// Encoder is a basic Encoder that will encode Cid's using a specifed
+// base and optionally upgrade a CidV0 to CidV1
 type Encoder struct {
 	Base    mbase.Encoder
 	Upgrade bool
@@ -36,6 +36,8 @@ func (enc Encoder) Encode(c cid.Cid) string {
 	return c.Encode(enc.Base)
 }
 
+// Recode reencodes the cid string to match the paramaters of the
+// encoder
 func (enc Encoder) Recode(v string) (string, error) {
 	skip, err := enc.noopRecode(v)
 	if skip || err != nil {

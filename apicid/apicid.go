@@ -1,8 +1,6 @@
 package apicid
 
 import (
-	"encoding/json"
-
 	cid "github.com/ipfs/go-cid"
 	"github.com/ipfs/go-cidutil/cidenc"
 	mbase "github.com/multiformats/go-multibase"
@@ -12,12 +10,12 @@ import (
 var JSONBase mbase.Encoder = mbase.MustNewEncoder(mbase.Base58BTC)
 
 // apicid.Hash is a type to respesnt a CID in the API which marshals
-// as a hash
+// as a string
 type Hash struct {
-	str string // always in CidJSONBase
+	str string
 }
 
-// FromCid created an APICid from a Cid
+// FromCid creates an APICid from a Cid
 func FromCid(c cid.Cid) Hash {
 	return Hash{c.Encode(JSONBase)}
 }
@@ -42,12 +40,13 @@ func (c Hash) Encode(enc cidenc.Interface) string {
 	return str
 }
 
-func (c *Hash) UnmarshalJSON(b []byte) error {
-	return json.Unmarshal(b, &c.str)
+func (c *Hash) UnmarshalText(b []byte) error {
+	c.str = string(b)
+	return nil
 }
 
-func (c Hash) MarshalJSON() ([]byte, error) {
-	return json.Marshal(c.str)
+func (c Hash) MarshalText() ([]byte, error) {
+	return []byte(c.str), nil
 }
 
 // Cid is type to represent a normal CID in the API which marshals

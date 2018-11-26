@@ -22,12 +22,6 @@
       "hash": "QmR8BauakNcBa3RbE4nbQu76PDiJgoQgz8AJdhJuiU4TAw",
       "name": "go-cid",
       "version": "0.9.1"
-    },
-    {
-      "author": "why",
-      "hash": "QmVi2uUygezqaMTqs3Yzt5FcZFHJoYD4B7jQ2BELjj7ZuY",
-      "name": "go-path",
-      "version": "1.1.23"
     }
   ],
   "gxVersion": "0.12.1",

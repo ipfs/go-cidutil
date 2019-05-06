@@ -96,7 +96,7 @@ bafybeietjgsrl3eqpqpcabv3g6iubytsifvq24xrrhd3juetskltgq7dja.
 	offset := 0
 	for len(buf) > 0 {
 		_, j, _, cidStr := ScanForCid(buf)
-		if cidStr != "" && cids[idx]  != cidStr {
+		if cidStr != "" && cids[idx] != cidStr {
 			t.Fatalf("Scan failed, expected %s, got %s (idx=%d offset=%d)", cids[idx], cidStr, idx, offset)
 		}
 		buf = buf[j:]

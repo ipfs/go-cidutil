@@ -14,7 +14,7 @@ type Encoder struct {
 
 // Default return a new default encoder
 func Default() Encoder {
-	return Encoder{Base: mbase.MustNewEncoder(mbase.Base58BTC)}
+	return Encoder{Base: mbase.MustNewEncoder(mbase.Base32)}
 }
 
 // Encode encodes the cid using the parameters of the Encoder

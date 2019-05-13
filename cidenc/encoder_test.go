@@ -59,4 +59,12 @@ func TestCidEncoder(t *testing.T) {
 	testRecode(enc, cidv0str, cidb32str)
 	testRecode(enc, cidv1str, cidb32str)
 	testRecode(enc, cidb32str, cidb32str)
+
+	enc = Default()
+	testEncode(enc, cidv0, cidv0str)
+	testEncode(enc, cidv1, cidb32str)
+	testRecode(enc, cidv0str, cidv0str)
+	testRecode(enc, cidv1str, cidb32str)
+	testRecode(enc, cidb32str, cidb32str)
+
 }

@@ -8,6 +8,10 @@
 
 > go-cidutil implements various utilities and helper functions for working with CIDs
 
+## Lead Maintainer
+
+[Steven Allen](https://github.com/Stebalien)
+
 ## Contribute
 
 PRs accepted.

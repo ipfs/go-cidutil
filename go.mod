@@ -5,3 +5,5 @@ require (
 	github.com/multiformats/go-multibase v0.0.1
 	github.com/multiformats/go-multihash v0.0.1
 )
+
+go 1.12

@@ -9,7 +9,7 @@ import (
 
 func TestCidConv(t *testing.T) {
 	cidv0 := "QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn"
-	cidv1 := "zdj7WbTaiJT1fgatdet9Ei9iDB5hdCxkbVyhyh8YTUnXMiwYi"
+	cidv1 := "bafybeiczsscdsbs7ffqz55asqdf3smv6klcw3gofszvwlyarci47bgf354"
 	cid, err := c.Decode(cidv0)
 	if err != nil {
 		t.Fatal(err)
@@ -19,7 +19,7 @@ func TestCidConv(t *testing.T) {
 		t.Fatal(err)
 	}
 	if cid.String() != cidv1 {
-		t.Fatal("conversion failure")
+		t.Fatalf("conversion failure: %s != %s", cid, cidv1)
 	}
 	cid, err = toCidV0(cid)
 	if err != nil {
@@ -33,7 +33,7 @@ func TestCidConv(t *testing.T) {
 
 func TestBadCidConv(t *testing.T) {
 	// this cid is a raw leaf and should not be able to convert to cidv0
-	cidv1 := "zb2rhhzX7uSKrtQ2ZZXFAabKiKFYZrJqKY2KE1cJ8yre2GSWZ"
+	cidv1 := "bafkreifit7vvfkf2cwwzvyycdczm5znbdbqx54ab6shbesvwgkwthdf77y"
 	cid, err := c.Decode(cidv1)
 	if err != nil {
 		t.Fatal(err)

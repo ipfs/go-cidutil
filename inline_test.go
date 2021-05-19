@@ -14,7 +14,7 @@ func TestInlineBuilderSmallValue(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if c.Prefix().MhType != mhash.ID {
+	if c.Prefix().MhType != mhash.IDENTITY {
 		t.Fatal("Inliner builder failed to use ID Multihash on small values")
 	}
 }
@@ -27,7 +27,7 @@ func TestInlinerBuilderLargeValue(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if c.Prefix().MhType == mhash.ID {
+	if c.Prefix().MhType == mhash.IDENTITY {
 		t.Fatal("Inliner builder used ID Multihash on large values")
 	}
 }

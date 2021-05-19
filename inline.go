@@ -22,5 +22,5 @@ func (p InlineBuilder) Sum(data []byte) (cid.Cid, error) {
 	if len(data) > p.Limit {
 		return p.Builder.Sum(data)
 	}
-	return cid.V1Builder{Codec: p.GetCodec(), MhType: mhash.ID}.Sum(data)
+	return cid.V1Builder{Codec: p.GetCodec(), MhType: mhash.IDENTITY}.Sum(data)
 }

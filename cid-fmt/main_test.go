@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"testing"
 
 	c "github.com/ipfs/go-cid"
@@ -27,7 +26,7 @@ func TestCidConv(t *testing.T) {
 	}
 	cidStr := cid.String()
 	if cidStr != cidv0 {
-		t.Error(fmt.Sprintf("conversion failure, expected: %s; but got: %s", cidv0, cidStr))
+		t.Errorf("conversion failure, expected: %s; but got: %s", cidv0, cidStr)
 	}
 }
 
@@ -38,7 +37,7 @@ func TestBadCidConv(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	cid, err = toCidV0(cid)
+	_, err = toCidV0(cid)
 	if err == nil {
 		t.Fatal("expected failure")
 	}

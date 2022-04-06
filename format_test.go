@@ -69,7 +69,7 @@ func testFmt(t *testing.T, cidStr string, newBase mb.Encoding, fmtStr string, re
 		t.Fatal(err)
 	}
 	if str != result {
-		t.Error(fmt.Sprintf("expected: %s; but got: %s", result, str))
+		t.Errorf("expected: %s; but got: %s", result, str)
 	}
 }
 

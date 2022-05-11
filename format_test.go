@@ -19,8 +19,8 @@ func TestFmt(t *testing.T) {
 		fmtStr  string
 		result  string
 	}{
-		{"cidv0", -1, "%P", "cidv0-protobuf-sha2-256-32"},
-		{"cidv0", -1, "%b-%v-%c-%h-%L", "base58btc-cidv0-protobuf-sha2-256-32"},
+		{"cidv0", -1, "%P", "cidv0-dag-pb-sha2-256-32"},
+		{"cidv0", -1, "%b-%v-%c-%h-%L", "base58btc-cidv0-dag-pb-sha2-256-32"},
 		{"cidv0", -1, "%s", "QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn"},
 		{"cidv0", -1, "%S", "QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn"},
 		{"cidv0", -1, "ver#%V/#%C/#%H/%L", "ver#0/#112/#18/32"},
@@ -30,8 +30,8 @@ func TestFmt(t *testing.T) {
 		{"cidv0", -1, "%D", "72gdmFAgRzYHkJzKiL8MgMMRW3BTSCGyDHroPxJbxMJn"},
 		{"cidv0", 'B', "%S", "CIQFTFEEHEDF6KLBT32BFAGLXEZL4UWFNWM4LFTLMXQBCERZ6CMLX3Y"},
 		{"cidv0", 'B', "%B%S", "BCIQFTFEEHEDF6KLBT32BFAGLXEZL4UWFNWM4LFTLMXQBCERZ6CMLX3Y"},
-		{"cidv1", -1, "%P", "cidv1-protobuf-sha2-256-32"},
-		{"cidv1", -1, "%b-%v-%c-%h-%L", "base58btc-cidv1-protobuf-sha2-256-32"},
+		{"cidv1", -1, "%P", "cidv1-dag-pb-sha2-256-32"},
+		{"cidv1", -1, "%b-%v-%c-%h-%L", "base58btc-cidv1-dag-pb-sha2-256-32"},
 		{"cidv1", -1, "%s", "zdj7WfLr9DhLrb1hsoSi4fSdjjxuZmeqgEtBPWxMLtPbDNbFD"},
 		{"cidv1", -1, "%S", "dj7WfLr9DhLrb1hsoSi4fSdjjxuZmeqgEtBPWxMLtPbDNbFD"},
 		{"cidv1", -1, "ver#%V/#%C/#%H/%L", "ver#1/#112/#18/32"},

@@ -1,8 +1,9 @@
 package cidutil
 
 import (
-	"github.com/ipfs/go-cid"
 	"sort"
+
+	"github.com/ipfs/go-cid"
 )
 
 // Slice is a convenience type for sorting CIDs

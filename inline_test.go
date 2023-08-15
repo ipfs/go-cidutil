@@ -1,7 +1,7 @@
 package cidutil
 
 import (
-	"math/rand"
+	"crypto/rand"
 	"testing"
 
 	cid "github.com/ipfs/go-cid"

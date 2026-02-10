@@ -2,7 +2,7 @@ module github.com/ipfs/go-cidutil
 
 require (
 	github.com/ipfs/go-cid v0.2.0
-	github.com/multiformats/go-multibase v0.0.3
+	github.com/multiformats/go-multibase v0.2.0
 	github.com/multiformats/go-multicodec v0.4.1
 	github.com/multiformats/go-multihash v0.0.15
 )

@@ -150,7 +150,7 @@ outer:
 
 var exitCode = 0
 
-func errorMsg(fmtStr string, a ...interface{}) {
+func errorMsg(fmtStr string, a ...any) {
 	fmt.Fprintf(os.Stderr, "Error: ")
 	fmt.Fprintf(os.Stderr, fmtStr, a...)
 	fmt.Fprintf(os.Stderr, "\n")
